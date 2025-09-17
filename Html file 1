@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thebe Sithole - Data Visualization Designer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.4;
+            color: #000;
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #fff;
+            border-bottom: 3px solid #000;
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hamburger-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background: #000;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #FF0000;
+            letter-spacing: -1px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: #0066FF;
+        }
+
+        .subscribe-btn {
+            background: #FFDD00;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background: #FF0000;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            margin-top: 70px;
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="%23CC5500" stroke-width="1" opacity="0.1"/></pattern></defs><rect width="1200" height="800" fill="url(%23grid)"/><circle cx="300" cy="200" r="100" fill="%23CC5500" opacity="0.1"/><rect x="600" y="300" width="200" height="150" fill="%23CC5500" opacity="0.2"/><polygon points="800,100 900,50 950,150 850,200" fill="%23CC5500" opacity="0.15"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .cover-story-label {
+            background: #FF0000;
+            color: white;
+            padding: 8px 20px;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            transform: skew(-5deg);
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 120px);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            color: #000;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(255, 221, 0, 0.5);
+            letter-spacing: -3px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 3vw, 28px);
+            font-weight: 300;
+            color: #333;
+            max-width: 800px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            height: 20px;
+            background: #000;
+            position: relative;
+        }
+
+        .section-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) skew(-15deg);
+            background: #0066FF;
+            width: 200px;
+            height: 30px;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            background: #000;
+            color: white;
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 20px 40px;
+            display: inline-block;
+            transform: skew(-10deg);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #666;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            border: 3px solid #000;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: #FFDD00;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Qualifications Section */
+        .qualifications-section {
+            background: #000;
+            color: white;
+            padding: 80px 20px;
+        }
+
+        .qualifications-section .section-title {
+            background: #0066FF;
+            color: white;
+        }
+
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .cert-card {
+            background: white;
+            color: #000;
+            padding: 30px;
+            border-left: 5px solid #FF0000;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 221, 0, 0.4);
+        }
+
+        .cert-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cert-issuer {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .cert-year {
+            font-size: 12px;
+            background: #FFDD00;
+            color: #000;
+            padding: 4px 8px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .tech-stack {
+            margin-top: 60px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .tech-item {
+            background: #222;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .tech-item:hover {
+            background: #0066FF;
+            border-color: #0066FF;
+            transform: scale(1.1);
+        }
+
+        .tech-name {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .project-card {
+            background: #000;
+            color: white;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .project-image {
+            height: 250px;
+            background: linear-gradient(45deg, #FF0000, #FFDD00);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="none"/><circle cx="100" cy="100" r="30" fill="white" opacity="0.3"/><rect x="200" y="150" width="80" height="60" fill="white" opacity="0.2"/><line x1="50" y1="200" x2="350" y2="50" stroke="white" stroke-width="2" opacity="0.4"/><polygon points="300,200 350,180 350,220" fill="white" opacity="0.3"/></svg>');
+            background-size: cover;
+        }
+
+        .project-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #0066FF;
+            color: white;
+            padding: 5px 10px;
+            font-weight: 900;
+            font-size: 12px;
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .project-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: #333;
+            color: white;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag:hover {
+            background: #FFDD00;
+            color: #000;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #FF0000;
+            color: white;
+            padding: 80px 20px;
+        }
+
+        .contact-section .section-title {
+            background: #000;
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .contact-details {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .contact-form {
+            background: white;
+            color: #000;
+            padding: 40px;
+            border: 3px solid #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #000;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #000;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 14px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #0066FF;
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .social-item {
+            background: #000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .social-item:hover {
+            background: #FFDD00;
+            color: #000;
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 48px;
+                letter-spacing: -2px;
+                bottom: 20%;
+            }
+
+            .cover-story-label {
+                font-size: 12px;
+                top: 20%;
+            }
+
+            .binary-strip {
+                font-size: 10px;
+                height: 40px;
+                padding: 0 15px;
+            }
+
+            .binary-strip.top {
+                top: 35%;
+            }
+
+            .binary-strip.bottom {
+                bottom: 30%;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .section-title {
+                font-size: 28px;
+                padding: 15px 25px;
+            }
+        }
+
+        /* Interactive Data Visualization */
+        .data-viz-container {
+            display: none;
+        }
+
+        .data-point {
+            display: none;
+        }
+
+        .data-line {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="hamburger-menu">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+            
+            <div class="logo">THEBE SITHOLE</div>
+            
+            <nav class="header-nav">
+                <div class="nav-item">About</div>
+                <div class="nav-item">Portfolio</div>
+                <div class="nav-item">Contact</div>
+            </nav>
+            
+            <button class="subscribe-btn">Hire Me</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-image"></div>
+        <div class="curved-lines"></div>
+        <div class="center-dot"></div>
+        
+        <!-- Binary Code Strips -->
+        <div class="binary-strip top">
+            <span class="binary-arrows">▶</span>
+            <span class="binary-code">10001000100101001001010001010</span>
+            <span>//////</span>
+            <span class="binary-code">10001001101010110010101</span>
+            <span>//////</span>
+            <span class="binary-code">01011001001010100101</span>
+            <span class="binary-arrows">◀</span>
+        </div>
+        
+        <div class="binary-strip bottom">
+            <span class="binary-arrows">▶</span>
+            <span class="binary-code">10001010010001101001000110101010</span>
+            <span>//////////////////////</span>
+            <span class="binary-code">00001011010110100111010001</span>
+            <span class="binary-arrows">◀</span>
+        </div>
+        
+        <div class="hero-content">
+            <div class="cover-story-label">DATA VISUALIZATION DESIGNER</div>
+            <h1 class="hero-title">DATA<br>STORYTELLER<span class="star">✦</span></h1>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="section-header">
+            <div class="section-title">About</div>
+            <p class="section-subtitle">Data visualization specialist crafting insights through design</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p><strong>I'm Thebe Sithole</strong>, a data visualization designer passionate about transforming complex information into clear, actionable insights. With a background in statistics and design, I bridge the gap between raw data and meaningful storytelling.</p>
+                
+                <p>My work spans interactive dashboards, infographic design, and comprehensive data analysis across industries including healthcare, finance, and urban planning. I believe that great data visualization isn't just about making charts look pretty—it's about revealing truth and enabling better decisions.</p>
+                
+                <p>Based in Cape Town, South Africa, I combine technical expertise with creative vision to help organizations unlock the power of their data through compelling visual narratives.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Tools Mastered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Data Insights</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Qualifications Section -->
+    <section class="qualifications-section">
+        <div class="section-header">
+            <div class="section-title">Qualifications</div>
+            <p class="section-subtitle">Certified expertise and technical skills</p>
+        </div>
+        
+        <div class="certs-grid">
+            <div class="cert-card">
+                <div class="cert-title">Tableau Desktop Specialist</div>
+                <div class="cert-issuer">Tableau</div>
+                <div class="cert-year">2024</div>
+            </div>
+            
+            <div class="cert-card">
+                <div class="cert-title">Google Data Analytics Professional</div>
+                <div class="cert-issuer">Google/Coursera</div>
+                <div class="cert-year">2023</div>
+            </div>
+            
+            <div class="cert-card">
+                <div class="cert-title">Data Visualization with D3.js</div>
+                <div class="cert-issuer">FreeCodeCamp</div>
+                <div class="cert-year">2023</div>
+            </div>
+            
+            <div class="cert-card">
+                <div class="cert-title">Statistics & Data Science</div>
+                <div class="cert-issuer">University of Cape Town</div>
+                <div class="cert-year">2022</div>
+            </div>
+            
+            <div class="cert-card">
+                <div class="cert-title">Python for Data Analysis</div>
+                <div class="cert-issuer">DataCamp</div>
+                <div class="cert-year">2022</div>
+            </div>
+            
+            <div class="cert-card">
+                <div class="cert-title">Adobe Creative Suite</div>
+                <div class="cert-issuer">Adobe</div>
+                <div class="cert-year">2021</div>
+            </div>
+        </div>
+        
+        <div class="tech-stack">
+            <h3 style="font-size: 24px; text-align: center; margin-bottom: 30px; text-transform: uppercase; font-weight: 900;">Technical Arsenal</h3>
+            <div class="tech-grid">
+                <div class="tech-item"><div class="tech-name">D3.js</div></div>
+                <div class="tech-item"><div class="tech-name">Tableau</div></div>
+                <div class="tech-item"><div class="tech-name">Python</div></div>
+                <div class="tech-item"><div class="tech-name">R Studio</div></div>
+                <div class="tech-item"><div class="tech-name">JavaScript</div></div>
+                <div class="tech-item"><div class="tech-name">Power BI</div></div>
+                <div class="tech-item"><div class="tech-name">Adobe Suite</div></div>
+                <div class="tech-item"><div class="tech-name">SQL</div></div>
+                <div class="tech-item"><div class="tech-name">Excel</div></div>
+                <div class="tech-item"><div class="tech-name">Plotly</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section">
+        <div class="section-header">
+            <div class="section-title">Portfolio</div>
+            <p class="section-subtitle">Selected projects showcasing data visualization expertise</p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">01</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Social Media Analytics</h3>
+                    <p class="project-description">Real-time social media sentiment analysis and engagement tracking platform for brand monitoring with natural language processing.</p>
+                    <div class="project-tags">
+                        <span class="tag">APIs</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Social</span>
+                        <span class="tag">NLP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="section-header">
+            <div class="section-title">Let's Work Together</div>
+            <p class="section-subtitle">Ready to transform your data into compelling visual stories</p>
+        </div>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <div class="contact-details">
+                    <strong>Email:</strong> thebe.sithole@datavisdesign.co.za<br>
+                    <strong>Phone:</strong> +27 (0) 123 456 789<br>
+                    <strong>Location:</strong> Cape Town, South Africa<br>
+                    <strong>Available:</strong> Mon-Fri, 9AM-6PM SAST<br><br>
+                    
+                    <strong>Response Time:</strong> Within 24 hours<br>
+                    <strong>Consultation:</strong> Free initial 30-minute call<br><br>
+                    
+                    I specialize in transforming complex data into clear, actionable insights through interactive dashboards, infographics, and comprehensive data storytelling.
+                </div>
+            </div>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company (Optional)</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="project-type">Project Type</label>
+                    <input type="text" id="project-type" name="project-type" placeholder="Dashboard | Infographic | Analysis | Other">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Project Details</label>
+                    <textarea id="message" name="message" placeholder="Describe your project, data sources, timeline, and goals..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Project Inquiry</button>
+            </form>
+        </div>
+        
+        <div class="social-links">
+            <div class="social-item">LinkedIn</div>
+            <div class="social-item">GitHub</div>
+            <div class="social-item">Behance</div>
+            <div class="social-item">Tableau Public</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        © 2024 Thebe Sithole. All Rights Reserved.<br>
+        Data Visualization Designer | Cape Town, South Africa
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const section = this.textContent.toLowerCase();
+                let targetSection;
+                
+                switch(section) {
+                    case 'about':
+                        targetSection = '.about-section';
+                        break;
+                    case 'portfolio':
+                        targetSection = '.portfolio-section';
+                        break;
+                    case 'contact':
+                        targetSection = '.contact-section';
+                        break;
+                }
+                
+                if (targetSection) {
+                    document.querySelector(targetSection).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Hamburger menu animation
+        document.querySelector('.hamburger-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+            // Add mobile menu functionality here
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.name || !data.email || !data.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your inquiry! I will get back to you within 24 hours.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        // Stats counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                if (target === '∞') return;
+                
+                const numTarget = parseInt(target.replace('+', ''));
+                let current = 0;
+                const increment = numTarget / 50;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numTarget) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + (target.includes('+') ? '+' : '');
+                    }
+                }, 30);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stats-grid')) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe stats section
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid) {
+            observer.observe(statsGrid);
+        }
+
+        // Add scroll-based animations
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.data-viz-container');
+            
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(calc(-50% + ${speed}px))`;
+            }
+        });
+
+        // Social links functionality
+        document.querySelectorAll('.social-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const platform = this.textContent.toLowerCase().replace(' ', '');
+                
+                // Simulate opening social media profiles
+                const urls = {
+                    'linkedin': 'https://linkedin.com/in/thebe-sithole',
+                    'github': 'https://github.com/thebe-sithole',
+                    'behance': 'https://behance.net/thebe-sithole',
+                    'tableaupublic': 'https://public.tableau.com/profile/thebe.sithole'
+                };
+                
+                if (urls[platform]) {
+                    // In a real implementation, you would use:
+                    // window.open(urls[platform], '_blank');
+                    alert(`Opening ${this.textContent} profile...`);
+                }
+            });
+        });
+
+        // Hire Me button
+        document.querySelector('.subscribe-btn').addEventListener('click', function() {
+            document.querySelector('.contact-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Enhanced data visualization animation
+        function createDataVisualization() {
+            const container = document.querySelector('.data-viz-container');
+            if (!container) return;
+
+            // Create additional animated elements
+            const chartContainer = document.createElement('div');
+            chartContainer.style.cssText = `
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 100px;
+                height: 80px;
+                border: 2px solid #0066FF;
+                background: rgba(255,221,0,0.1);
+            `;
+            
+            // Create bars for chart
+            for (let i = 0; i < 5; i++) {
+                const bar = document.createElement('div');
+                bar.style.cssText = `
+                    position: absolute;
+                    bottom: 5px;
+                    left: ${10 + i * 18}px;
+                    width: 12px;
+                    height: ${20 + Math.random() * 40}px;
+                    background: #FF0000;
+                    animation: barGrow 2s ease-in-out infinite;
+                    animation-delay: ${i * 0.2}s;
+                `;
+                chartContainer.appendChild(bar);
+            }
+            
+            container.appendChild(chartContainer);
+
+            // Add CSS animation for bars
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes barGrow {
+                    0%, 100% { transform: scaleY(0.5); }
+                    50% { transform: scaleY(1.2); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize enhanced visualization
+        createDataVisualization();
+
+        // Add typing effect for hero subtitle
+        function typeWriter(element, text, speed = 50) {
+            element.textContent = '';
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Start typing effect after page load
+        window.addEventListener('load', () => {
+            const subtitle = document.querySelector('.hero-subtitle');
+            const originalText = subtitle.textContent;
+            setTimeout(() => {
+                typeWriter(subtitle, originalText, 30);
+            }, 1000);
+        });
+
+        // Project card hover effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-10px) scale(1)';
+            });
+        });
+
+        // Add loading screen
+        function showLoadingScreen() {
+            const loader = document.createElement('div');
+            loader.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                color: #FFDD00;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                font-size: 24px;
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            `;
+            loader.textContent = 'Loading Data Stories...';
+            document.body.appendChild(loader);
+
+            // Remove loader after page loads
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(loader);
+                    }, 500);
+                }, 1500);
+            });
+        }
+
+        // Initialize loading screen
+        showLoadingScreen();
+    </script>
+</body>
+</html>class="project-title">Climate Data Dashboard</h3>
+                    <p class="project-description">Interactive web dashboard visualizing 50 years of global temperature data, CO2 levels, and climate indicators with real-time updates and predictive modeling.</p>
+                    <div class="project-tags">
+                        <span class="tag">D3.js</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">APIs</span>
+                        <span class="tag">Climate</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">02</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Economic Inequality Study</h3>
+                    <p class="project-description">Comprehensive infographic series exploring income distribution trends across South African demographics with statistical analysis.</p>
+                    <div class="project-tags">
+                        <span class="tag">Adobe Suite</span>
+                        <span class="tag">R</span>
+                        <span class="tag">Statistics</span>
+                        <span class="tag">Social</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">03</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Urban Mobility Patterns</h3>
+                    <p class="project-description">Geographic visualization of public transport usage patterns and traffic flow data for Cape Town with real-time integration.</p>
+                    <div class="project-tags">
+                        <span class="tag">GIS</span>
+                        <span class="tag">Mapbox</span>
+                        <span class="tag">Urban</span>
+                        <span class="tag">Transport</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">04</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Business Intelligence Suite</h3>
+                    <p class="project-description">Executive dashboard suite providing real-time KPI monitoring and predictive analytics for retail chain operations.</p>
+                    <div class="project-tags">
+                        <span class="tag">Tableau</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">KPIs</span>
+                        <span class="tag">Retail</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">05</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Healthcare Outcomes</h3>
+                    <p class="project-description">Patient outcome visualization system helping healthcare providers identify treatment trends and optimize care pathways.</p>
+                    <div class="project-tags">
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Healthcare</span>
+                        <span class="tag">Analytics</span>
+                        <span class="tag">Privacy</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">06</div>
+                </div>
+                <div class="project-content">
+                    <h3
