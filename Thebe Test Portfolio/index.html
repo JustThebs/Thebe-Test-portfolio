@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thebe Test Portfolio</title>
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.4;
+            color: #000;
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Apply Impact font to all headings */
+        h1, h2, h3, h4, h5, h6,
+        .main-title,
+        .section-title,
+        .logo-mark,
+        .project-title,
+        .cert-title,
+        .stat-number {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+        }
+
+        /* Navigation Header - Dynamic Background */
+        .main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #f5f5f5;
+            border-bottom: 1px solid #000;
+            z-index: 1000;
+            padding: 20px 40px;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.hero-active {
+            background: #f5f5f5;
+            border-bottom-color: #000;
+        }
+
+        .main-header.about-active {
+            background: #000;
+            border-bottom-color: #333;
+        }
+
+        .main-header.about-active .logo-mark,
+        .main-header.about-active .nav-item,
+        .main-header.about-active .location-text {
+            color: #fff;
+        }
+
+        .main-header.portfolio-active {
+            background: #000;
+            border-bottom-color: #333;
+        }
+
+        .main-header.portfolio-active .logo-mark,
+        .main-header.portfolio-active .nav-item,
+        .main-header.portfolio-active .location-text {
+            color: #fff;
+        }
+
+        .main-header.contact-active {
+            background: #f5f5f5;
+            border-bottom-color: #000;
+        }
+
+        .main-header.contact-active .logo-mark,
+        .main-header.contact-active .nav-item,
+        .main-header.contact-active .location-text {
+            color: #000;
+        }
+
+        .header-content {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-mark {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 60px;
+            font-weight: 300;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            transition: color 0.3s ease;
+            color: #000;
+        }
+
+        .nav-item:hover {
+            color: #666;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid #000;
+            width: 40px;
+            height: 20px;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 20px;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: #000;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle.active {
+            background: linear-gradient(45deg, #ff4500, #ff6b35);
+            border-color: #ff4500;
+        }
+
+        .theme-toggle.active::before {
+            background: #fff;
+            transform: translateX(18px);
+        }
+
+        /* Color theme styles */
+        body.color-theme {
+            --primary-color: #ff4500;
+            --secondary-color: #ff6b35;
+            --accent-color: #ff8c42;
+            --text-color: #2c2c2c;
+            --bg-color: #fff5f0;
+        }
+
+        /* Hero section color theme */
+        body.color-theme .hero-section {
+            background: linear-gradient(135deg, #fff5f0, #ffe6d9);
+        }
+
+        body.color-theme .main-title {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.color-theme .title-highlight {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* About section color theme */
+        body.color-theme .about-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        body.color-theme .about-section .section-title {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        body.color-theme .stat-item {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        body.color-theme .stat-item:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Portfolio section color theme */
+        body.color-theme .portfolio-section {
+            background: linear-gradient(135deg, var(--bg-color), #fff);
+        }
+
+        body.color-theme .portfolio-section .section-title {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.color-theme .slide-content {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        body.color-theme .curtain-left,
+        body.color-theme .curtain-right {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* Contact section color theme */
+        body.color-theme .contact-section {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        body.color-theme .phone-number,
+        body.color-theme .email-address {
+            color: var(--primary-color);
+        }
+
+        body.color-theme .large-name {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Header color theme adjustments */
+        body.color-theme .main-header.hero-active,
+        body.color-theme .main-header.contact-active {
+            background: rgba(255, 245, 240, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        body.color-theme .main-header.about-active,
+        body.color-theme .main-header.portfolio-active {
+            background: rgba(255, 69, 0, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        body.color-theme .main-header.about-active .logo-mark,
+        body.color-theme .main-header.about-active .nav-item,
+        body.color-theme .main-header.about-active .location-text {
+            color: white;
+        }
+
+        body.color-theme .main-header.portfolio-active .logo-mark,
+        body.color-theme .main-header.portfolio-active .nav-item,
+        body.color-theme .main-header.portfolio-active .location-text {
+            color: white;
+        }
+
+        body.color-theme .theme-toggle {
+            border-color: var(--primary-color);
+        }
+
+        body.color-theme .theme-toggle::before {
+            background: var(--primary-color);
+        }
+
+        .location-text {
+            font-size: 14px;
+            color: #000;
+            font-weight: 300;
+        }
+
+        .hire-text {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            line-height: 1.3;
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 2px;
+            background: #000;
+            margin: 2px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            margin-top: 0;
+            height: 100vh;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-padding-top {
+            height: 1px;
+            background: #000;
+            width: 100%;
+        }
+
+        /* Wave component styles */
+        a-waves {
+            --x: -0.5rem;
+            --y: 50%;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 75vh;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        a-waves:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: #160000;
+            border-radius: 50%;
+            transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0);
+            will-change: transform;
+            content: "";
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        a-waves svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        a-waves svg path {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5px;
+            opacity: 0.8;
+        }
+
+        /* Data Banner Strip Styles */
+        .data-banner {
+            width: 100%;
+            height: 40px;
+            background: white;
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            animation: scroll 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .data-element {
+            display: inline-block;
+            padding: 0 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 12px;
+            color: #000;
+            border-right: 1px solid #171516;
+            line-height: 40px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .data-element:nth-child(odd) {
+            background: #f8f9fa;
+        }
+
+        .data-element:nth-child(even) {
+            background: white;
+        }
+
+        /* Key data elements in red */
+        .data-element:nth-child(1),
+        .data-element:nth-child(7) {
+            color: #0f0e0e;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .hero-padding-bottom {
+            height: 1px;
+            background: #000;
+            width: 100%;
+        }
+
+        /* Title area */
+        .hero-title-area {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .main-title {
+            font-size: clamp(120px, 15vw, 180px);
+            font-weight: 900;
+            line-height: 0.85;
+            text-transform: uppercase;
+            color: #000;
+            letter-spacing: -3px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+        }
+
+        .title-highlight {
+            background: #000000;
+            color: white;
+            padding: 0 20px;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            height: 1px;
+            background: #000;
+            margin: 0;
+            width: 100%;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 20px;
+            max-width: 1500px;
+            margin: 0 auto;
+            background: #000;
+            color: #fff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .about-section .section-title {
+            background: #000;
+            color: #fff;
+            font-size: 200px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 30px 48px;
+            display: inline-block;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            line-height: 1;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: #ccc;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .about-text strong {
+            color: #fff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            border: 3px solid #333;
+            background: #111;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+            border-color: #fff;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .stat-item:hover .stat-number {
+            color: #000;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #ccc;
+        }
+
+        .stat-item:hover .stat-label {
+            color: #000;
+        }
+
+        
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 80px 0;
+            background: #000;
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .portfolio-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle, #333 1px, transparent 1px),
+                radial-gradient(circle, #333 1px, transparent 1px);
+            background-size: 25px 25px, 25px 25px;
+            background-position: 0 0, 12.5px 12.5px;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .section-title {
+            background: transparent;
+            color: #fff;
+            font-size: clamp(60px, 12vw, 200px);
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 0;
+            display: inline-block;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            line-height: 0.9;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #ccc;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            font-style: normal;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .portfolio-container {
+            position: relative;
+            height: 600px;
+            max-width: 100vw;
+            z-index: 2;
+        }
+
+        /* Curtain Effect */
+        .curtain-left,
+        .curtain-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(45deg, #111, #000);
+            z-index: 10;
+            transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .curtain-left {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .curtain-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .curtain-left.open {
+            transform: translateX(-100%);
+        }
+
+        .curtain-right.open {
+            transform: translateX(100%);
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.8s ease 0.6s;
+        }
+
+        .carousel-wrapper.revealed {
+            opacity: 1;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            min-width: 80vw;
+            height: 100%;
+            display: flex;
+            margin-right: 40px;
+            position: relative;
+        }
+
+        .slide-image {
+            width: 60%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .slide-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="none"/><circle cx="200" cy="150" r="40" fill="white" opacity="0.1"/><rect x="400" y="300" width="120" height="80" fill="white" opacity="0.05"/><line x1="100" y1="400" x2="700" y2="100" stroke="white" stroke-width="2" opacity="0.1"/><polygon points="600,400 700,360 700,440" fill="white" opacity="0.1"/><circle cx="150" cy="450" r="25" fill="white" opacity="0.05"/><rect x="550" y="150" width="60" height="40" fill="white" opacity="0.08"/></svg>') center/cover no-repeat;
+            z-index: 2;
+        }
+
+        .slide-content {
+            width: 40%;
+            background: #000;
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .project-category {
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        .project-title {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+        }
+
+        .project-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #ddd;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .tag {
+            background: transparent;
+            color: white;
+            border: 1px solid #666;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: white;
+            color: #000;
+        }
+
+        .project-number {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.1);
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            line-height: 1;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #000;
+            transform: scale(1.2);
+        }
+
+        .carousel-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .arrow {
+            width: 60px;
+            height: 60px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            pointer-events: all;
+            transition: all 0.3s ease;
+        }
+
+        .arrow:hover {
+            background: #000;
+            transform: scale(1.1);
+        }
+
+        /* Mobile adjustments for carousel */
+        @media (max-width: 768px) {
+            .carousel-slide {
+                min-width: 95vw;
+                flex-direction: column;
+            }
+
+            .slide-image {
+                width: 100%;
+                height: 60%;
+            }
+
+            .slide-content {
+                width: 100%;
+                height: 40%;
+                padding: 30px 20px;
+            }
+
+            .project-title {
+                font-size: 32px;
+            }
+
+            .project-number {
+                font-size: 60px;
+                top: 20px;
+                right: 20px;
+            }
+
+            .carousel-arrows {
+                padding: 0 20px;
+            }
+
+            .arrow {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #f5f5f5;
+            color: #000;
+            padding: 40px;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            align-items: start;
+        }
+
+        /* Left Navigation */
+        .contact-nav {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 600px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.6;
+        }
+
+        .social-links-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .social-link {
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            opacity: 0.6;
+        }
+
+        /* Center Content */
+        .contact-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 40px;
+            text-align: right;
+            width: 100%;
+        }
+
+        .contact-me-btn {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .phone-number {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: #000;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+        }
+
+        .email-address {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #000;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+        }
+
+        .social-links-center {
+            display: flex;
+            gap: 40px;
+            justify-content: flex-end;
+            margin-bottom: 40px;
+        }
+
+        .large-name {
+            font-size: clamp(80px, 12vw, 160px);
+            font-weight: 900;
+            color: #000;
+            line-height: 0.8;
+            margin: 40px 0;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 12px;
+            margin-top: 60px;
+        }
+
+        .location {
+            text-align: left;
+        }
+
+        .development {
+            text-align: center;
+        }
+
+        .copyright {
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        /* Right Address */
+        .contact-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            height: 600px;
+        }
+
+        .address-info {
+            text-align: right;
+        }
+
+        .address-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .address-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .header-left {
+                justify-content: center;
+            }
+
+            .header-nav {
+                gap: 30px;
+                justify-content: center;
+            }
+
+            .header-right {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .hire-text {
+                text-align: center;
+            }
+
+            .main-title {
+                font-size: clamp(80px, 12vw, 120px);
+                letter-spacing: -4px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 28px;
+                padding: 15px 25px;
+            }
+
+            /* Mobile banner adjustments */
+            .data-banner {
+                height: 30px;
+            }
+            
+            .data-element {
+                font-size: 10px;
+                padding: 0 15px;
+                min-width: 70px;
+                line-height: 30px;
+            }
+
+            /* Mobile contact adjustments */
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px 0;
+            }
+
+            .contact-nav {
+                order: 3;
+                height: auto;
+                text-align: center;
+            }
+
+            .nav-links, .social-links-left {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .contact-center {
+                order: 1;
+            }
+
+            .contact-info {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .phone-number, .email-address {
+                font-size: 24px;
+            }
+
+            .social-links-center {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .large-name {
+                font-size: clamp(60px, 15vw, 100px);
+                margin: 20px 0;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .contact-right {
+                order: 2;
+                justify-content: center;
+                height: auto;
+            }
+
+            .address-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="hamburger-menu">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </div>
+                <div class="logo-mark">THEBE<br>SITHOLE</div>
+            </div>
+            
+            <nav class="header-nav">
+                <div class="nav-item">[About]</div>
+                <div class="nav-item">[Work]</div>
+                <div class="nav-item">[Contact]</div>
+            </nav>
+            
+            <div class="header-right">
+                <div class="header-text">
+                    <div class="location-text">Working globally from Johannesburg, South Africa</div>
+                    <div class="hire-text"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Interactive Waves -->
+    <section class="hero-section">
+        <div class="hero-padding-top"></div>
+        
+        <!-- Interactive Wave Grid Background -->
+        <a-waves>
+            <svg class="js-svg"></svg>
+        </a-waves> 
+        
+        <div class="hero-padding-bottom"></div>
+        
+        <!-- First Data Banner Strip - Before Title -->
+        <div class="data-banner">
+            <div class="banner-content">
+                <span class="data-element">87%</span>
+                <span class="data-element">12.5k</span>
+                <span class="data-element">●●●○○</span>
+                <span class="data-element">101010</span>
+                <span class="data-element">DATA</span>
+                <span class="data-element">92%</span>
+                <span class="data-element">8.2k</span>
+                <span class="data-element">○●○●○</span>
+                <span class="data-element">110011</span>
+                <span class="data-element">VIZ</span>
+                <!-- Seamless loop -->
+                <span class="data-element">87%</span>
+                <span class="data-element">12.5k</span>
+                <span class="data-element">●●●○○</span>
+                <span class="data-element">101010</span>
+                <span class="data-element">DATA</span>
+                <span class="data-element">92%</span>
+                <span class="data-element">8.2k</span>
+                <span class="data-element">○●○●○</span>
+                <span class="data-element">110011</span>
+                <span class="data-element">VIZ</span>
+            </div>
+        </div>
+        
+        <!-- Title area -->
+        <div class="hero-title-area">
+            <h1 class="main-title">DATA <span class="title-highlight">VIS</span> DESIGNER</h1>
+        </div>
+
+        <!-- Second Data Banner Strip - After Title -->
+        <div class="data-banner">
+            <div class="banner-content">
+                <span class="data-element">94%</span>
+                <span class="data-element">3.7k</span>
+                <span class="data-element">●○●○●</span>
+                <span class="data-element">011011</span>
+                <span class="data-element">INSIGHTS</span>
+                <span class="data-element">78%</span>
+                <span class="data-element">9.1k</span>
+                <span class="data-element">○●●○●</span>
+                <span class="data-element">101101</span>
+                <span class="data-element">CHARTS</span>
+                <!-- Seamless loop -->
+                <span class="data-element">94%</span>
+                <span class="data-element">3.7k</span>
+                <span class="data-element">●○●○●</span>
+                <span class="data-element">011011</span>
+                <span class="data-element">INSIGHTS</span>
+                <span class="data-element">78%</span>
+                <span class="data-element">9.1k</span>
+                <span class="data-element">○●●○●</span>
+                <span class="data-element">101101</span>
+                <span class="data-element">CHARTS</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="section-header">
+            <div class="section-title">About</div>
+            <p class="section-subtitle"></p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p><strong>I'm Thebe Sithole</strong>, a data visualization designer passionate about transforming complex information into clear, actionable insights. With a background in statistics and design, I bridge the gap between raw data and meaningful storytelling.</p>
+                
+                <p>My work spans interactive dashboards, infographic design, and comprehensive data analysis across industries including healthcare, finance, and urban planning. I believe that great data visualization isn't just about making charts look pretty—it's about revealing truth and enabling better decisions.</p>
+                
+                <p>Based in Johannesburg, South Africa, I combine technical expertise with creative vision to help organizations unlock the power of their data through compelling visual narratives.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Tools Mastered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Data Insights</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+   
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolioSection">
+        <div class="section-header">
+            <div class="section-title">RECENT WORKS</div>
+            <p class="section-subtitle">Selected projects showcasing data visualization expertise</p>
+        </div>
+        
+        <div class="portfolio-container" id="portfolioContainer">
+            <!-- Curtain Elements -->
+            <div class="curtain-left" id="curtainLeft"></div>
+            <div class="curtain-right" id="curtainRight"></div>
+            
+            <div class="carousel-wrapper" id="carouselWrapper">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide">
+                        <div class="slide-image">
+                            <!-- Placeholder for actual project image -->
+                        </div>
+                        <div class="slide-content">
+                            <div class="project-number">01</div>
+                            <div class="project-category">Data Visualization</div>
+                            <h3 class="project-title">Climate Data Dashboard</h3>
+                            <p class="project-description">Interactive web dashboard visualizing 50 years of global temperature data, CO2 levels, and climate indicators with real-time updates and predictive modeling capabilities.</p>
+                            <div class="project-tags">
+                                <span class="tag">D3.js</span>
+                                <span class="tag">Python</span>
+                                <span class="tag">APIs</span>
+                                <span class="tag">Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <div class="slide-image">
+                            <!-- Placeholder for actual project image -->
+                        </div>
+                        <div class="slide-content">
+                            <div class="project-number">02</div>
+                            <div class="project-category">Infographic Design</div>
+                            <h3 class="project-title">Economic Inequality Study</h3>
+                            <p class="project-description">Comprehensive infographic series exploring income distribution trends across South African demographics with detailed statistical analysis and visual storytelling.</p>
+                            <div class="project-tags">
+                                <span class="tag">Adobe Suite</span>
+                                <span class="tag">R Statistics</span>
+                                <span class="tag">Data Analysis</span>
+                                <span class="tag">Print Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <div class="slide-image">
+                            <!-- Placeholder for actual project image -->
+                        </div>
+                        <div class="content">
+                            <div class="project-number">03</div>
+                            <div class="project-category">Geographic Visualization</div>
+                            <h3 class="project-title">Urban Mobility Patterns</h3>
+                            <p class="project-description">Geographic visualization of public transport usage patterns and traffic flow data for Cape Town with real-time integration and interactive mapping features.</p>
+                            <div class="project-tags">
+                                <span class="tag">GIS Mapping</span>
+                                <span class="tag">Mapbox GL</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Urban Planning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="carousel-slide">
+                        <div class="slide-image">
+                            <!-- Placeholder for actual project image -->
+                        </div>
+                        <div class="slide-content">
+                            <div class="project-number">04</div>
+                            <div class="project-category">Business Intelligence</div>
+                            <h3 class="project-title">Executive Dashboard Suite</h3>
+                            <p class="project-description">Comprehensive dashboard suite providing real-time KPI monitoring and predictive analytics for retail chain operations with executive-level insights.</p>
+                            <div class="project-tags">
+                                <span class="tag">Tableau</span>
+                                <span class="tag">SQL Database</span>
+                                <span class="tag">Power BI</span>
+                                <span class="tag">Business Intelligence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="carousel-arrows">
+                <button class="arrow prev-arrow" id="prevBtn">‹</button>
+                <button class="arrow next-arrow" id="nextBtn">›</button>
+            </div>
+
+            <div class="carousel-nav" id="carouselNav">
+                <div class="nav-dot active" data-slide="0"></div>
+                <div class="nav-dot" data-slide="1"></div>
+                <div class="nav-dot" data-slide="2"></div>
+                <div class="nav-dot" data-slide="3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-layout">
+            <!-- Left side navigation -->
+            <div class="contact-nav">
+                <div class="nav-links">
+                    <div class="nav-link">ABOUT ME</div>
+                    <div class="nav-link">SERVICES</div>
+                    <div class="nav-link">WORKS</div>
+                </div>
+                
+                <div class="social-links-left">
+                    <div class="social-link">[ DRIBBBLE ]</div>
+                    <div class="social-link">[ BEHANCE ]</div>
+                    <div class="social-link">[ LINKEDIN ]</div>
+                </div>
+            </div>
+            
+            <!-- Center content -->
+            <div class="contact-center">
+                <div class="contact-info">
+                    <div class="contact-me-btn">CONTACT ME →</div>
+                    <div class="phone-number">+27 096 468 31 71</div>
+                    <div class="email-address">thebe.sithole.0304@gmail.com</div>
+                    
+                    <div class="social-links-center">
+                        <div class="social-link">INSTAGRAM →</div>
+                        <div class="social-link">TELEGRAM →</div>
+                        <div class="social-link">FACEBOOK →</div>
+                    </div>
+                </div>
+                
+                <div class="large-name">THEBE SITHOLE</div>
+                
+                <div class="footer-info">
+                    <div class="location">JOHANNESBURG, SOUTH AFRICA: (GMT+2) 22:31</div>
+                    <div class="development">DEVELOPMENT - TS</div>
+                    <div class="copyright">© All Right Reserved.<br>2025 ThebeSithole</div>
+                </div>
+            </div>
+            
+            <!-- Right side address -->
+            <div class="contact-right">
+                <div class="address-info">
+                    <div class="address-label">Address:</div>
+                    <div class="address-text">14 Dohdaria Khmelnytskcho Street<br>Johannesburg, South Africa</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        © 2025 Thebe Sithole. All Rights Reserved.<br>
+        Data Visualization Designer | Johannesburg, South Africa
+    </footer>
+
+    <script>
+        // Simple Perlin noise implementation
+        class Noise {
+            constructor(seed = Math.random()) {
+                this.seed = seed;
+                this.gradients = {};
+            }
+
+            fade(t) {
+                return t * t * t * (t * (t * 6 - 15) + 10);
+            }
+
+            lerp(a, b, t) {
+                return a + t * (b - a);
+            }
+
+            grad(hash, x, y) {
+                const h = hash & 15;
+                const u = h < 8 ? x : y;
+                const v = h < 4 ? y : h === 12 || h === 14 ? x : 0;
+                return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+            }
+
+            noise(x, y) {
+                const X = Math.floor(x) & 255;
+                const Y = Math.floor(y) & 255;
+                x -= Math.floor(x);
+                y -= Math.floor(y);
+                const u = this.fade(x);
+                const v = this.fade(y);
+                const A = this.hash(X) + Y;
+                const AA = this.hash(A);
+                const AB = this.hash(A + 1);
+                const B = this.hash(X + 1) + Y;
+                const BA = this.hash(B);
+                const BB = this.hash(B + 1);
+                return this.lerp(
+                    this.lerp(this.grad(this.hash(AA), x, y), this.grad(this.hash(BA), x - 1, y), u),
+                    this.lerp(this.grad(this.hash(AB), x, y - 1), this.grad(this.hash(BB), x - 1, y - 1), u),
+                    v
+                );
+            }
+
+            hash(x) {
+                x = Math.imul(x ^ (x >>> 16), 2246822507);
+                x = Math.imul(x ^ (x >>> 13), 3266489909);
+                return (x ^= x >>> 16) >>> 0;
+            }
+
+            perlin2(x, y) {
+                return this.noise(x, y);
+            }
+        }
+
+        class AWaves extends HTMLElement {
+            connectedCallback() {
+                this.svg = this.querySelector('.js-svg')
+
+                this.mouse = {
+                    x: -10,
+                    y: 0,
+                    lx: 0,
+                    ly: 0,
+                    sx: 0,
+                    sy: 0,
+                    v: 0,
+                    vs: 0,
+                    a: 0,
+                    set: false,
+                }
+
+                this.lines = []
+                this.paths = []
+                this.noise = new Noise(Math.random())
+
+                this.setSize()
+                this.setLines()
+                this.bindEvents()
+                
+                requestAnimationFrame(this.tick.bind(this))
+            }
+
+            bindEvents() {
+                window.addEventListener('resize', this.onResize.bind(this))
+                window.addEventListener('mousemove', this.onMouseMove.bind(this))
+                this.addEventListener('touchmove', this.onTouchMove.bind(this))
+            }
+
+            onResize() {
+                this.setSize()
+                this.setLines()
+            }
+
+            onMouseMove(e) {
+                this.updateMousePosition(e.pageX, e.pageY)
+            }
+
+            onTouchMove(e) {
+                e.preventDefault()
+                const touch = e.touches[0]
+                this.updateMousePosition(touch.clientX, touch.clientY)
+            }
+
+            updateMousePosition(x, y) {
+                const { mouse } = this
+
+                mouse.x = x - this.bounding.left
+                mouse.y = y - this.bounding.top + window.scrollY
+
+                if (!mouse.set) {
+                    mouse.sx = mouse.x
+                    mouse.sy = mouse.y
+                    mouse.lx = mouse.x
+                    mouse.ly = mouse.y
+                    mouse.set = true
+                }
+            }
+
+            setSize() {
+                this.bounding = this.getBoundingClientRect()
+                this.svg.style.width = `${this.bounding.width}px`
+                this.svg.style.height = `${this.bounding.height}px`
+            }
+
+            setLines() {
+                const { width, height } = this.bounding
+                
+                this.lines = []
+
+                this.paths.forEach((path) => {
+                    path.remove()
+                })
+                this.paths = []
+
+                const xGap = 10
+                const yGap = 32
+
+                const oWidth = width + 200
+                const oHeight = height + 30
+
+                const totalLines = Math.ceil(oWidth / xGap)
+                const totalPoints = Math.ceil(oHeight / yGap)
+
+                const xStart = (width - xGap * totalLines) / 2
+                const yStart = (height - yGap * totalPoints) / 2
+
+                for (let i = 0; i <= totalLines; i++) {
+                    const points = []
+
+                    for (let j = 0; j <= totalPoints; j++) {
+                        const point = {
+                            x: xStart + xGap * i,
+                            y: yStart + yGap * j,
+                            wave: { x: 0, y: 0 },
+                            cursor: { x: 0, y: 0, vx: 0, vy: 0 },
+                        }
+
+                        points.push(point)
+                    }
+
+                    const path = document.createElementNS(
+                        'http://www.w3.org/2000/svg',
+                        'path'
+                    )
+                    path.classList.add('a__line')
+                    path.classList.add('js-line')
+
+                    this.svg.appendChild(path)
+                    this.paths.push(path)
+
+                    this.lines.push(points)
+                }
+            }
+
+            movePoints(time) {
+                const { lines, mouse, noise } = this
+
+                lines.forEach((points) => {
+                    points.forEach((p) => {
+                        const move =
+                            noise.perlin2(
+                                (p.x + time * 0.0125) * 0.002,
+                                (p.y + time * 0.005) * 0.0015
+                            ) * 12
+                        p.wave.x = Math.cos(move) * 32
+                        p.wave.y = Math.sin(move) * 16
+
+                        const dx = p.x - mouse.sx
+                        const dy = p.y - mouse.sy
+                        const d = Math.hypot(dx, dy)
+                        const l = Math.max(175, mouse.vs)
+
+                        if (d < l) {
+                            const s = 1 - d / l
+                            const f = Math.cos(d * 0.001) * s
+
+                            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065
+                            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065
+                        }
+
+                        p.cursor.vx += (0 - p.cursor.x) * 0.005
+                        p.cursor.vy += (0 - p.cursor.y) * 0.005
+
+                        p.cursor.vx *= 0.925
+                        p.cursor.vy *= 0.925
+
+                        p.cursor.x += p.cursor.vx * 2
+                        p.cursor.y += p.cursor.vy * 2
+
+                        p.cursor.x = Math.min(100, Math.max(-100, p.cursor.x))
+                        p.cursor.y = Math.min(100, Math.max(-100, p.cursor.y))
+                    })
+                })
+            }
+
+            moved(point, withCursorForce = true) {
+                const coords = {
+                    x: point.x + point.wave.x + (withCursorForce ? point.cursor.x : 0),
+                    y: point.y + point.wave.y + (withCursorForce ? point.cursor.y : 0),
+                }
+
+                coords.x = Math.round(coords.x * 10) / 10
+                coords.y = Math.round(coords.y * 10) / 10
+
+                return coords
+            }
+
+            drawLines() {
+                const { lines, moved, paths } = this
+                
+                lines.forEach((points, lIndex) => {
+                    let p1 = moved.call(this, points[0], false)
+
+                    let d = `M ${p1.x} ${p1.y}`
+
+                    points.forEach((p1, pIndex) => {
+                        const isLast = pIndex === points.length - 1
+
+                        p1 = moved.call(this, p1, !isLast)
+
+                        d += `L ${p1.x} ${p1.y}`
+                    })
+
+                    paths[lIndex].setAttribute('d', d)
+                })
+            }
+
+            tick(time) {
+                const { mouse } = this
+
+                mouse.sx += (mouse.x - mouse.sx) * 0.1
+                mouse.sy += (mouse.y - mouse.sy) * 0.1
+
+                const dx = mouse.x - mouse.lx
+                const dy = mouse.y - mouse.ly
+                const d = Math.hypot(dx, dy)
+
+                mouse.v = d
+                mouse.vs += (d - mouse.vs) * 0.1
+                mouse.vs = Math.min(100, mouse.vs)
+
+                mouse.lx = mouse.x
+                mouse.ly = mouse.y
+
+                mouse.a = Math.atan2(dy, dx)
+
+                this.style.setProperty('--x', `${mouse.sx}px`)
+                this.style.setProperty('--y', `${mouse.sy}px`)
+
+                this.movePoints(time)
+                this.drawLines()
+                
+                requestAnimationFrame(this.tick.bind(this))
+            }
+        }
+
+        customElements.define('a-waves', AWaves)
+
+        // Portfolio functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const section = this.textContent.toLowerCase();
+                let targetSection;
+                
+                switch(section) {
+                    case '[about]':
+                        targetSection = '.about-section';
+                        break;
+                    case '[work]':
+                        targetSection = '.portfolio-section';
+                        break;
+                    case '[contact]':
+                        targetSection = '.contact-section';
+                        break;
+                }
+                
+                if (targetSection) {
+                    document.querySelector(targetSection).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Contact section navigation
+        document.querySelectorAll('.nav-link').forEach(item => {
+            item.addEventListener('click', function() {
+                const section = this.textContent.toLowerCase();
+                let targetSection;
+                
+                switch(section) {
+                    case 'about me':
+                        targetSection = '.about-section';
+                        break;
+                    case 'services':
+                        // Add services section if needed
+                        break;
+                    case 'works':
+                        targetSection = '.portfolio-section';
+                        break;
+                }
+                
+                if (targetSection) {
+                    document.querySelector(targetSection).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        document.querySelector('.hamburger-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                if (target === '∞') return;
+                
+                const numTarget = parseInt(target.replace('+', ''));
+                let current = 0;
+                const increment = numTarget / 50;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numTarget) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + (target.includes('+') ? '+' : '');
+                    }
+                }, 30);
+            });
+        }
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stats-grid')) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid) {
+            observer.observe(statsGrid);
+        }
+
+        // Dynamic Header Color System
+        class DynamicHeader {
+            constructor() {
+                this.header = document.querySelector('.main-header');
+                this.sections = [
+                    { element: document.querySelector('.hero-section'), class: 'hero-active' },
+                    { element: document.querySelector('.about-section'), class: 'about-active' },
+                    { element: document.querySelector('.portfolio-section'), class: 'portfolio-active' },
+                    { element: document.querySelector('.contact-section'), class: 'contact-active' }
+                ];
+                
+                this.init();
+            }
+
+            init() {
+                // Create intersection observer for each section
+                const options = {
+                    root: null,
+                    rootMargin: '-50px 0px -50px 0px',
+                    threshold: 0.1
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.updateHeader(entry.target);
+                        }
+                    });
+                }, options);
+
+                // Observe all sections
+                this.sections.forEach(section => {
+                    if (section.element) {
+                        this.observer.observe(section.element);
+                    }
+                });
+
+                // Set initial header state
+                this.updateHeader(document.querySelector('.hero-section'));
+            }
+
+            updateHeader(activeSection) {
+                // Remove all active classes
+                this.sections.forEach(section => {
+                    this.header.classList.remove(section.class);
+                });
+
+                // Find and add the appropriate class
+                const currentSection = this.sections.find(section => 
+                    section.element === activeSection
+                );
+                
+                if (currentSection) {
+                    this.header.classList.add(currentSection.class);
+                }
+            }
+
+            destroy() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+            }
+        }
+        gsap.registerPlugin(ScrollTrigger);
+
+        // GSAP Curtain Effect with ScrollTrigger
+        class CurtainReveal {
+            constructor() {
+                this.curtainLeft = document.getElementById('curtainLeft');
+                this.curtainRight = document.getElementById('curtainRight');
+                this.carouselWrapper = document.getElementById('carouselWrapper');
+                this.portfolioSection = document.getElementById('portfolioSection');
+                
+                this.init();
+            }
+
+            init() {
+                // Create scroll trigger for curtain reveal
+                ScrollTrigger.create({
+                    trigger: this.portfolioSection,
+                    start: "top 60%",
+                    end: "bottom 20%",
+                    onEnter: () => this.openCurtains(),
+                    onLeave: () => this.closeCurtains(),
+                    onEnterBack: () => this.openCurtains(),
+                    onLeaveBack: () => this.closeCurtains(),
+                });
+
+                // Title animation
+                gsap.fromTo(".section-title", 
+                    {
+                        opacity: 0,
+                        y: 50,
+                        scale: 0.8
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: ".section-header",
+                            start: "top 80%",
+                            end: "bottom 60%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            }
+
+            openCurtains() {
+                // Animate curtains opening
+                gsap.to(this.curtainLeft, {
+                    x: "-100%",
+                    duration: 1.2,
+                    ease: "power3.inOut"
+                });
+
+                gsap.to(this.curtainRight, {
+                    x: "100%",
+                    duration: 1.2,
+                    ease: "power3.inOut"
+                });
+
+                // Fade in carousel after curtains start opening
+                gsap.to(this.carouselWrapper, {
+                    opacity: 1,
+                    duration: 0.8,
+                    delay: 0.6,
+                    ease: "power2.out"
+                });
+
+                // Animate individual slides with stagger
+                gsap.fromTo(".carousel-slide", 
+                    {
+                        opacity: 0,
+                        y: 30
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        stagger: 0.2,
+                        delay: 0.8,
+                        ease: "power2.out"
+                    }
+                );
+            }
+
+            closeCurtains() {
+                // Animate curtains closing
+                gsap.to(this.curtainLeft, {
+                    x: "0%",
+                    duration: 1,
+                    ease: "power3.inOut"
+                });
+
+                gsap.to(this.curtainRight, {
+                    x: "0%",
+                    duration: 1,
+                    ease: "power3.inOut"
+                });
+
+                // Fade out carousel
+                gsap.to(this.carouselWrapper, {
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            }
+        }
+        class PortfolioCarousel {
+            constructor() {
+                this.track = document.getElementById('carouselTrack');
+                this.slides = document.querySelectorAll('.carousel-slide');
+                this.dots = document.querySelectorAll('.nav-dot');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                
+                this.currentIndex = 0;
+                this.slideWidth = 0;
+                this.isAnimating = false;
+                
+                this.init();
+            }
+
+            init() {
+                this.calculateSlideWidth();
+                this.bindEvents();
+                this.startAutoPlay();
+                
+                // Set initial position
+                this.updateCarousel();
+            }
+
+            calculateSlideWidth() {
+                if (this.slides.length > 0) {
+                    this.slideWidth = this.slides[0].offsetWidth + 40; // slide width + margin
+                }
+            }
+
+            bindEvents() {
+                // Arrow navigation
+                this.prevBtn.addEventListener('click', () => this.prevSlide());
+                this.nextBtn.addEventListener('click', () => this.nextSlide());
+
+                // Dot navigation
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') this.prevSlide();
+                    if (e.key === 'ArrowRight') this.nextSlide();
+                });
+
+                // Resize handler
+                window.addEventListener('resize', () => {
+                    this.calculateSlideWidth();
+                    this.updateCarousel();
+                });
+
+                // Touch/swipe support
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                this.track.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                });
+
+                this.track.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX;
+                    e.preventDefault();
+                });
+
+                this.track.addEventListener('touchend', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    
+                    const diff = startX - currentX;
+                    const threshold = 50;
+                    
+                    if (diff > threshold) {
+                        this.nextSlide();
+                    } else if (diff < -threshold) {
+                        this.prevSlide();
+                    }
+                });
+            }
+
+            updateCarousel() {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+
+                const translateX = -this.currentIndex * this.slideWidth;
+                
+                // Smooth animation
+                this.track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                this.track.style.transform = `translateX(${translateX}px)`;
+
+                // Update dots
+                this.dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentIndex);
+                });
+
+                // Reset animation flag
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, 600);
+            }
+
+            nextSlide() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+                this.updateCarousel();
+                this.resetAutoPlay();
+            }
+
+            prevSlide() {
+                if (this.isAnimating) return;
+                this.currentIndex = this.currentIndex === 0 ? this.slides.length - 1 : this.currentIndex - 1;
+                this.updateCarousel();
+                this.resetAutoPlay();
+            }
+
+            goToSlide(index) {
+                if (this.isAnimating || index === this.currentIndex) return;
+                this.currentIndex = index;
+                this.updateCarousel();
+                this.resetAutoPlay();
+            }
+
+            startAutoPlay() {
+                this.autoPlayInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 5000);
+            }
+
+            resetAutoPlay() {
+                clearInterval(this.autoPlayInterval);
+                this.startAutoPlay();
+            }
+
+            destroy() {
+                clearInterval(this.autoPlayInterval);
+            }
+        }
+
+        // Initialize all effects when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize dynamic header
+            const dynamicHeader = new DynamicHeader();
+            
+            // Initialize curtain reveal effect
+            const curtainReveal = new CurtainReveal();
+            
+            // Initialize carousel
+            const carousel = new PortfolioCarousel();
+        });
+
+        // Social link interactions
+        document.querySelectorAll('.social-link').forEach(item => {
+            item.addEventListener('click', function() {
+                const platform = this.textContent.toLowerCase().replace('[ ', '').replace(' ]', '').replace(' →', '');
+                console.log(`Opening ${platform} profile...`);
+                // Add actual social media links here
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thebe Sithole - Data Visualization Designer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background-color: #fafafa;
+            color: #000000;
+            overflow-x: hidden;
+            line-height: 1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 250, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 400;
+            font-size: 13px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .location {
+            font-size: 13px;
+            color: #000000;
+            font-weight: 400;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding-left: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            background: #fafafa;
+            overflow: hidden;
+        }
+
+        .hero-grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: left;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(6rem, 15vw, 11rem);
+            font-weight: 300;
+            line-height: 0.85;
+            color: #000;
+            letter-spacing: -0.02em;
+            margin-bottom: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            text-transform: uppercase;
+        }
+
+        .hero .vis-highlight {
+            background: #000;
+            color: #ffffff;
+            padding: 12px 32px;
+            display: inline-block;
+            margin: 0;
+            transform: rotate(0deg);
+        }
+
+        /* About Section */
+        .about {
+            background: #FFFFFF;
+            color: #000000;
+            position: relative;
+        }
+
+        .about-content {
+            max-width: 1600px;
+            width: 100%;
+            padding: 0 50px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 8rem;
+            font-weight: 300;
+            margin-bottom: 0px;
+            text-align: Right;
+            letter-spacing: -0.01em;
+            background: #FFFFFF;
+            color: #000000;
+            padding: 100px 0 40px 0;
+            line-height: 0.9;
+        }
+
+        .about-main {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 90px;
+            align-items: start;
+            padding: 50px 0 80px 0;
+            background: #000000;
+            margin: 0 -50px;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .about-sidebar {
+            padding-top: 60px;
+        }
+
+        .about-number {
+            font-size: 40px;
+            font-weight: 300;
+            color: #A0A0A0;
+            margin-bottom: 25px;
+            line-height: 1;
+        }
+
+        .about-label {
+            font-size: 12px;
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+
+        .about-quote {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .quote-gray {
+            color: #A0A0A0;
+        }
+
+        /* About Detail Section */
+        .about-detail {
+            background: #000000;
+            padding: 160px 50px;
+            color: #fff;
+        }
+
+        .about-detail-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        .about-text p {
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-top: 50px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #fff;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Skills Section */
+
+        .skills h2 {
+            font-size: 8rem;
+            font-weight: 300;
+            margin-bottom: 0px;
+            text-align: Right;
+            letter-spacing: -0.01em;
+            background: #000000;
+            color: #ffffff;
+            padding: 10px 0 40px 0;
+            line-height: 0.9;
+        }
+        .skills {
+            background: #000000;
+            padding: 100px 50px 200px 50px;
+        }
+    
+        .skills-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+        }
+
+        .skill-category {
+            position: relative;
+        }
+
+        .skill-category h3 {
+            font-size: 14.7px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 20px 0;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 400;
+            border-bottom: 1px solid #333;
+            transition: color 0.3s ease;
+        }
+
+        .skill-list li:hover {
+            color: #A0A0A0;
+        }
+
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Work Section */
+        .work {
+            background: #FFFFFF;
+            padding: 100px 50px;
+            color: #000;
+        }
+
+        .work-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .work h2 {
+            font-size: 8rem;
+            font-weight: 300;
+            margin-bottom: 100px;
+            text-align: Left;
+            letter-spacing: -0.01em;
+            line-height: 0.9;
+            color: #000;
+        }
+
+        .featured-project {
+            margin-bottom: 150px;
+        }
+
+        .featured-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .project-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            color: #000;
+        }
+
+        .project-description {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .tag {
+            background: #000;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-visual {
+            height: 350px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 60%, #f093fb 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-visual::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.9) 20%, transparent 40%),
+                radial-gradient(circle at 75% 30%, rgba(255,255,255,0.7) 15%, transparent 35%),
+                radial-gradient(circle at 60% 80%, rgba(255,215,0,0.8) 25%, transparent 45%),
+                radial-gradient(circle at 20% 70%, rgba(99, 102, 241, 0.6) 20%, transparent 40%);
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: 1px solid #000;
+            background: transparent;
+            color: #000;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .project-card {
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .project-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .project-image.office {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect fill="%23f0f0f0" width="400" height="250"/><rect fill="%23ddd" x="20" y="50" width="360" height="150" rx="8"/><circle fill="%23666" cx="200" cy="125" r="30"/></svg>');
+        }
+
+        .project-image.book {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect fill="%23c53030" width="400" height="250"/><rect fill="%23fff" x="50" y="50" width="300" height="150" rx="4"/></svg>');
+        }
+
+        .project-image.abstract {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+        }
+
+        .project-card-content {
+            padding: 30px;
+        }
+
+        .project-category {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .project-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            color: #000;
+        }
+
+        .project-card p {
+            color: #333;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #000000;
+            padding: 100px 50px;
+            position: relative;
+        }
+
+        .contact-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: right;
+        }
+
+        .contact-title {
+            font-size: 8rem;
+            font-weight: 300;
+            color: #a6a6a6;
+            line-height: 0.9;
+            text-align: left;
+            margin-bottom: 80px;
+            letter-spacing: -0.01em;
+        }
+
+        .contact-title .me {
+            display: block;
+        }
+
+        .contact-details {
+            margin-bottom: 40px;
+        }
+
+        .phone {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .email {
+            font-size: 1.8rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: flex-end;
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .address {
+            text-align: right;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .footer-name {
+            font-size: 9rem;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 0.9;
+            text-align: center;
+            margin: 80px 0;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        /* Grid SVG Background */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero h1 { font-size: 8rem; }
+            .about h2, .work h2, .footer-name { font-size: 6rem; }
+            .about-quote { font-size: 3rem; }
+            .about-main { grid-template-columns: 1fr; gap: 50px; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 20px 30px; }
+            .hero h1 { font-size: 4rem; }
+            .about h2, .work h2, .footer-name { font-size: 4rem; }
+            .about-quote { font-size: 2rem; }
+            .featured-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .contact-content { text-align: center; }
+            .social-links { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Grid Background -->
+    <div class="grid-overlay">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#e0e0e0" stroke-width="0.8"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+            
+            <!-- Curved data visualization lines -->
+            <path d="M 0 200 Q 300 150 600 180 Q 900 210 1200 160 Q 1500 140 1800 170" 
+                  stroke="#e5e5e5" stroke-width="0.8" fill="none" opacity="0.8"/>
+            <path d="M 0 300 Q 250 260 500 290 Q 750 320 1000 280 Q 1250 260 1500 300" 
+                  stroke="#e5e5e5" stroke-width="0.8" fill="none" opacity="0.8"/>
+            <path d="M 0 400 Q 200 380 400 390 Q 600 400 800 385 Q 1000 370 1200 390" 
+                  stroke="#e5e5e5" stroke-width="0.8" fill="none" opacity="0.9"/>
+            <path d="M 0 500 Q 350 470 700 480 Q 1050 490 1400 470" 
+                  stroke="#e5e5e5" stroke-width="0.8" fill="none" opacity="0.9"/>
+            <path d="M 0 150 Q 400 120 800 140 Q 1200 160 1600 130" 
+                  stroke="#e5e5e5" stroke-width="0.8" fill="none" opacity="0.9"/>
+            <path d="M 0 600 Q 300 580 600 590 Q 900 600 1200 585" 
+                  stroke="#e5e5e5" stroke-width="0.8" fill="none" opacity="0.9"/>
+            
+            <!-- Data points -->
+            <circle cx="8%" cy="22%" r="1.5" fill="#bbb" opacity="0.0"/>
+            <circle cx="25%" cy="35%" r="1.5" fill="#bbb" opacity="0.9"/>
+            <circle cx="45%" cy="25%" r="1.5" fill="#bbb" opacity="0.9"/>
+            <circle cx="65%" cy="45%" r="1.5" fill="#bbb" opacity="0.9"/>
+            <circle cx="85%" cy="30%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="15%" cy="60%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="75%" cy="75%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="90%" cy="85%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="30%" cy="50%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="55%" cy="65%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="70%" cy="20%" r="1.5" fill="#bbb" opacity="0.6"/>
+            <circle cx="20%" cy="80%" r="1.5" fill="#bbb" opacity="0.6"/>
+            
+            <!-- Additional curved connecting lines -->
+            <path d="M 8% 22% Q 25% 30% 45% 25%" stroke="#ddd" stroke-width="0.9" fill="none" opacity="0.4"/>
+            <path d="M 65% 45% Q 75% 60% 85% 30%" stroke="#ddd" stroke-width="0.9" fill="none" opacity="0.4"/>
+            <path d="M 15% 60% Q 45% 55% 75% 75%" stroke="#ddd" stroke-width="0.9" fill="none" opacity="0.4"/>
+            
+            <!-- Data labels scattered around -->
+            <text x="6%" y="20%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">87%</text>
+            <text x="22%" y="38%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">101010</text>
+            <text x="42%" y="28%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">DATA</text>
+            <text x="62%" y="48%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">92%</text>
+            <text x="82%" y="33%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">12.5K</text>
+            <text x="72%" y="78%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">110011</text>
+            <text x="88%" y="88%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">VIZ</text>
+            <text x="12%" y="63%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">94%</text>
+            <text x="52%" y="68%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">CHARTS</text>
+            <text x="28%" y="53%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">78%</text>
+            <text x="68%" y="23%" font-size="9" fill="#aaa" opacity="0.7" font-weight="300">INSIGHTS</text>
+        </svg>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">Thebe Sithole</div>
+        <ul class="nav-links">
+            <li><a href="#about">[ABOUT]</a></li>
+            <li><a href="#work">[WORK]</a></li>
+            <li><a href="#contact">[CONTACT]</a></li>
+        </ul>
+        <div class="location">Working globally from Johannesburg, South Africa</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Hero Background Graphics -->
+        <div class="hero-grid-bg">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grid Pattern -->
+                <defs>
+                    <pattern id="heroGrid" width="50" height="50" patternUnits="userSpaceOnUse">
+                        <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#e5e5e5" stroke-width="0.4"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#heroGrid)"/>
+                
+                <!-- Vertical Wavy Lines -->
+                <path d="M 100 0 Q 120 100 100 200 Q 80 300 100 400 Q 120 500 100 600 Q 80 700 100 800" 
+                      stroke="#c8c8c8" stroke-width="2" fill="none" opacity="0.7"/>
+                <path d="M 200 0 Q 220 80 200 160 Q 180 240 200 320 Q 220 400 200 480 Q 180 560 200 640 Q 220 720 200 800" 
+                      stroke="#c8c8c8" stroke-width="1.8" fill="none" opacity="0.6"/>
+                <path d="M 300 0 Q 320 120 300 240 Q 280 360 300 480 Q 320 600 300 720 Q 280 840 300 960" 
+                      stroke="#c8c8c8" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <path d="M 400 0 Q 380 90 400 180 Q 420 270 400 360 Q 380 450 400 540 Q 420 630 400 720" 
+                      stroke="#d0d0d0" stroke-width="1.3" fill="none" opacity="0.4"/>
+                <path d="M 500 0 Q 520 110 500 220 Q 480 330 500 440 Q 520 550 500 660 Q 480 770 500 880" 
+                      stroke="#d0d0d0" stroke-width="1.1" fill="none" opacity="0.35"/>
+                <path d="M 600 0 Q 580 70 600 140 Q 620 210 600 280 Q 580 350 600 420 Q 620 490 600 560 Q 580 630 600 700" 
+                      stroke="#d5d5d5" stroke-width="0.9" fill="none" opacity="0.3"/>
+                <path d="M 700 0 Q 720 130 700 260 Q 680 390 700 520 Q 720 650 700 780 Q 680 910 700 1040" 
+                      stroke="#d5d5d5" stroke-width="0.7" fill="none" opacity="0.25"/>
+                <path d="M 800 0 Q 780 85 800 170 Q 820 255 800 340 Q 780 425 800 510 Q 820 595 800 680" 
+                      stroke="#d8d8d8" stroke-width="0.8" fill="none" opacity="0.3"/>
+                <path d="M 900 0 Q 920 105 900 210 Q 880 315 900 420 Q 920 525 900 630 Q 880 735 900 840" 
+                      stroke="#d8d8d8" stroke-width="0.6" fill="none" opacity="0.25"/>
+                <path d="M 1000 0 Q 980 95 1000 190 Q 1020 285 1000 380 Q 980 475 1000 570 Q 1020 665 1000 760" 
+                      stroke="#dadada" stroke-width="0.8" fill="none" opacity="0.3"/>
+                <path d="M 1100 0 Q 1120 115 1100 230 Q 1080 345 1100 460 Q 1120 575 1100 690 Q 1080 805 1100 920" 
+                      stroke="#dadada" stroke-width="0.6" fill="none" opacity="0.25"/>
+                <path d="M 1200 0 Q 1180 75 1200 150 Q 1220 225 1200 300 Q 1180 375 1200 450 Q 1220 525 1200 600" 
+                      stroke="#dcdcdc" stroke-width="0.7" fill="none" opacity="0.2"/>
+                <path d="M 1300 0 Q 1320 125 1300 250 Q 1280 375 1300 500 Q 1320 625 1300 750 Q 1280 875 1300 1000" 
+                      stroke="#dcdcdc" stroke-width="0.5" fill="none" opacity="0.18"/>
+                <path d="M 1400 0 Q 1380 80 1400 160 Q 1420 240 1400 320 Q 1380 400 1400 480 Q 1420 560 1400 640" 
+                      stroke="#dedede" stroke-width="0.6" fill="none" opacity="0.2"/>
+                <path d="M 1500 0 Q 1520 100 1500 200 Q 1480 300 1500 400 Q 1520 500 1500 600 Q 1480 700 1500 800" 
+                      stroke="#dedede" stroke-width="0.4" fill="none" opacity="0.15"/>
+                
+                <!-- Additional Shorter Vertical Waves -->
+                <path d="M 150 0 Q 160 50 150 100 Q 140 150 150 200 Q 160 250 150 300" 
+                      stroke="#d0d0d0" stroke-width="0.5" fill="none" opacity="0.4"/>
+                <path d="M 250 100 Q 270 170 250 240 Q 230 310 250 380 Q 270 450 250 520" 
+                      stroke="#d0d0d0" stroke-width="0.6" fill="none" opacity="0.35"/>
+                <path d="M 350 50 Q 330 120 350 190 Q 370 260 350 330 Q 330 400 350 470" 
+                      stroke="#d2d2d2" stroke-width="0.4" fill="none" opacity="0.3"/>
+                <path d="M 450 200 Q 470 280 450 360 Q 430 440 450 520 Q 470 600 450 680" 
+                      stroke="#d2d2d2" stroke-width="0.7" fill="none" opacity="0.35"/>
+                <path d="M 550 80 Q 530 160 550 240 Q 570 320 550 400 Q 530 480 550 560" 
+                      stroke="#d4d4d4" stroke-width="0.5" fill="none" opacity="0.3"/>
+                <path d="M 650 150 Q 670 220 650 290 Q 630 360 650 430 Q 670 500 650 570" 
+                      stroke="#d4d4d4" stroke-width="0.6" fill="none" opacity="0.25"/>
+                <path d="M 750 30 Q 730 110 750 190 Q 770 270 750 350 Q 730 430 750 510" 
+                      stroke="#d6d6d6" stroke-width="0.4" fill="none" opacity="0.3"/>
+                <path d="M 850 120 Q 870 200 850 280 Q 830 360 850 440 Q 870 520 850 600" 
+                      stroke="#d6d6d6" stroke-width="0.5" fill="none" opacity="0.25"/>
+                <path d="M 950 60 Q 930 140 950 220 Q 970 300 950 380 Q 930 460 950 540" 
+                      stroke="#d8d8d8" stroke-width="0.3" fill="none" opacity="0.2"/>
+                <path d="M 1050 180 Q 1070 250 1050 320 Q 1030 390 1050 460 Q 1070 530 1050 600" 
+                      stroke="#d8d8d8" stroke-width="0.4" fill="none" opacity="0.2"/>
+                <path d="M 1150 40 Q 1130 120 1150 200 Q 1170 280 1150 360 Q 1130 440 1150 520" 
+                      stroke="#dadada" stroke-width="0.3" fill="none" opacity="0.18"/>
+                <path d="M 1250 100 Q 1270 180 1250 260 Q 1230 340 1250 420 Q 1270 500 1250 580" 
+                      stroke="#dadada" stroke-width="0.4" fill="none" opacity="0.18"/>
+                <!-- Additional Vertical Lines to Fill Blank Space -->
+                <path d="M 1600 0 Q 1580 90 1600 180 Q 1620 270 1600 360 Q 1580 450 1600 540 Q 1620 630 1600 720" 
+                      stroke="#dedede" stroke-width="0.6" fill="none" opacity="0.2"/>
+                <path d="M 1700 0 Q 1720 115 1700 230 Q 1680 345 1700 460 Q 1720 575 1700 690 Q 1680 805 1700 920" 
+                      stroke="#dadada" stroke-width="0.5" fill="none" opacity="0.25"/>
+                <path d="M 1800 0 Q 1780 75 1800 150 Q 1820 225 1800 300 Q 1780 375 1800 450 Q 1820 525 1800 600" 
+                      stroke="#dcdcdc" stroke-width="0.7" fill="none" opacity="0.2"/>
+                <path d="M 1900 0 Q 1920 125 1900 250 Q 1880 375 1900 500 Q 1920 625 1900 750 Q 1880 875 1900 1000" 
+                      stroke="#dcdcdc" stroke-width="0.5" fill="none" opacity="0.18"/>
+                <path d="M 2000 0 Q 1980 80 2000 160 Q 2020 240 2000 320 Q 1980 400 2000 480 Q 2020 560 2000 640" 
+                      stroke="#dedede" stroke-width="0.6" fill="none" opacity="0.2"/>
+                <path d="M 2100 0 Q 2120 100 2100 200 Q 2080 300 2100 400 Q 2120 500 2100 600 Q 2080 700 2100 800" 
+                      stroke="#dedede" stroke-width="0.4" fill="none" opacity="0.15"/>
+                <path d="M 2200 0 Q 2180 95 2200 190 Q 2220 285 2200 380 Q 2180 475 2200 570 Q 2220 665 2200 760" 
+                      stroke="#dadada" stroke-width="0.6" fill="none" opacity="0.25"/>
+                
+                <!-- Additional shorter vertical waves for texture -->
+                <path d="M 1650 120 Q 1670 200 1650 280 Q 1630 360 1650 440 Q 1670 520 1650 600" 
+                      stroke="#d0d0d0" stroke-width="0.5" fill="none" opacity="0.3"/>
+                <path d="M 1750 60 Q 1730 140 1750 220 Q 1770 300 1750 380 Q 1730 460 1750 540" 
+                      stroke="#d2d2d2" stroke-width="0.6" fill="none" opacity="0.35"/>
+                <path d="M 1850 180 Q 1870 250 1850 320 Q 1830 390 1850 460 Q 1870 530 1850 600" 
+                      stroke="#d0d0d0" stroke-width="0.4" fill="none" opacity="0.25"/>
+                <path d="M 1950 40 Q 1930 120 1950 200 Q 1970 280 1950 360 Q 1930 440 1950 520" 
+                      stroke="#d4d4d4" stroke-width="0.5" fill="none" opacity="0.3"/>
+                <path d="M 2050 100 Q 2070 180 2050 260 Q 2030 340 2050 420 Q 2070 500 2050 580" 
+                      stroke="#d2d2d2" stroke-width="0.4" fill="none" opacity="0.25"/>
+                <path d="M 2150 70 Q 2130 150 2150 230 Q 2170 310 2150 390 Q 2130 470 2150 550" 
+                      stroke="#d6d6d6" stroke-width="0.5" fill="none" opacity="0.3"/>
+                <path d="M 2250 150 Q 2270 220 2250 290 Q 2230 360 2250 430 Q 2270 500 2250 570" 
+                      stroke="#d4d4d4" stroke-width="0.4" fill="none" opacity="0.2"/>
+                
+                <!-- Complex curved data visualization lines that flow through the space -->
+                <path d="M -100 100 Q 100 80 200 90 Q 350 105 500 85 Q 650 65 800 80 Q 950 95 1100 70 Q 1250 45 1400 60 Q 1550 75 1700 50" 
+                      stroke="#c8c8c8" stroke-width="2" fill="none" opacity="0.9"/>
+                <path d="M -100 200 Q 80 175 160 185 Q 280 200 400 180 Q 520 160 640 175 Q 760 190 880 165 Q 1000 140 1120 155 Q 1240 170 1360 145 Q 1480 120 1600 135" 
+                      stroke="#c8c8c8" stroke-width="1.8" fill="none" opacity="0.85"/>
+                <path d="M -100 300 Q 120 270 240 285 Q 360 300 480 280 Q 600 260 720 275 Q 840 290 960 265 Q 1080 240 1200 255 Q 1320 270 1440 245 Q 1560 220 1680 235" 
+                      stroke="#c8c8c8" stroke-width="1.5" fill="none" opacity="0.8"/>
+                <path d="M -100 400 Q 150 375 300 390 Q 450 405 600 385 Q 750 365 900 380 Q 1050 395 1200 370 Q 1350 345 1500 360 Q 1650 375 1800 350" 
+                      stroke="#c8c8c8" stroke-width="1.2" fill="none" opacity="0.75"/>
+                <path d="M -100 500 Q 100 480 200 495 Q 350 510 500 490 Q 650 470 800 485 Q 950 500 1100 475 Q 1250 450 1400 465 Q 1550 480 1700 455" 
+                      stroke="#c8c8c8" stroke-width="1" fill="none" opacity="0.7"/>
+                <path d="M -100 600 Q 180 575 360 590 Q 540 605 720 585 Q 900 565 1080 580 Q 1260 595 1440 570 Q 1620 545 1800 560" 
+                      stroke="#c8c8c8" stroke-width="0.8" fill="none" opacity="0.65"/>
+                      
+                <!-- Intersecting diagonal flows -->
+                <path d="M 0 0 Q 200 150 400 120 Q 600 90 800 160 Q 1000 230 1200 200 Q 1400 170 1600 240" 
+                      stroke="#d0d0d0" stroke-width="1.5" fill="none" opacity="0.6"/>
+                <path d="M 0 600 Q 200 450 400 480 Q 600 510 800 440 Q 1000 370 1200 400 Q 1400 430 1600 360" 
+                      stroke="#d0d0d0" stroke-width="1.5" fill="none" opacity="0.6"/>
+                
+                <!-- Data points positioned on intersections and peaks -->
+                <circle cx="200" cy="90" r="3.5" fill="#777" opacity="0.8"/>
+                <circle cx="500" cy="85" r="3.5" fill="#777" opacity="0.8"/>
+                <circle cx="800" cy="80" r="3.5" fill="#777" opacity="0.8"/>
+                <circle cx="1100" cy="70" r="3.5" fill="#777" opacity="0.8"/>
+                <circle cx="1400" cy="60" r="3.5" fill="#777" opacity="0.8"/>
+                
+                <circle cx="160" cy="185" r="3" fill="#777" opacity="0.7"/>
+                <circle cx="400" cy="180" r="3" fill="#777" opacity="0.7"/>
+                <circle cx="640" cy="175" r="3" fill="#777" opacity="0.7"/>
+                <circle cx="880" cy="165" r="3" fill="#777" opacity="0.7"/>
+                <circle cx="1120" cy="155" r="3" fill="#777" opacity="0.7"/>
+                <circle cx="1360" cy="145" r="3" fill="#777" opacity="0.7"/>
+                
+                <circle cx="240" cy="285" r="2.5" fill="#777" opacity="0.6"/>
+                <circle cx="480" cy="280" r="2.5" fill="#777" opacity="0.6"/>
+                <circle cx="720" cy="275" r="2.5" fill="#777" opacity="0.6"/>
+                <circle cx="960" cy="265" r="2.5" fill="#777" opacity="0.6"/>
+                <circle cx="1200" cy="255" r="2.5" fill="#777" opacity="0.6"/>
+                
+                <!-- Strategic data labels positioned near key points -->
+                <text x="180" y="85" font-size="11" fill="#666" opacity="0.9" font-weight="500" font-family="Inter">87%</text>
+                <text x="480" y="80" font-size="11" fill="#666" opacity="0.9" font-weight="500" font-family="Inter">101010</text>
+                <text x="780" y="75" font-size="11" fill="#666" opacity="0.9" font-weight="500" font-family="Inter">DATA</text>
+                <text x="1080" y="65" font-size="11" fill="#666" opacity="0.9" font-weight="500" font-family="Inter">12.5K</text>
+                <text x="1380" y="55" font-size="11" fill="#666" opacity="0.9" font-weight="500" font-family="Inter">110011</text>
+                
+                <text x="140" y="180" font-size="10" fill="#666" opacity="0.8" font-weight="500" font-family="Inter">92%</text>
+                <text x="380" y="175" font-size="10" fill="#666" opacity="0.8" font-weight="500" font-family="Inter">VIZ</text>
+                <text x="620" y="170" font-size="10" fill="#666" opacity="0.8" font-weight="500" font-family="Inter">78%</text>
+                <text x="860" y="160" font-size="10" fill="#666" opacity="0.8" font-weight="500" font-family="Inter">3.7K</text>
+                <text x="1100" y="150" font-size="10" fill="#666" opacity="0.8" font-weight="500" font-family="Inter">CHARTS</text>
+                <text x="1340" y="140" font-size="10" fill="#666" opacity="0.8" font-weight="500" font-family="Inter">9.1K</text>
+                
+                <text x="220" y="280" font-size="9" fill="#666" opacity="0.7" font-weight="500" font-family="Inter">94%</text>
+                <text x="460" y="275" font-size="9" fill="#666" opacity="0.7" font-weight="500" font-family="Inter">INSIGHTS</text>
+                <text x="700" y="270" font-size="9" fill="#666" opacity="0.7" font-weight="500" font-family="Inter">011011</text>
+                <text x="940" y="260" font-size="9" fill="#666" opacity="0.7" font-weight="500" font-family="Inter">101101</text>
+                
+                <!-- Bottom dashboard-style data stream -->
+                <rect x="0" y="95%" width="100%" height="40" fill="#000000"/>
+                <text x="2%" y="97.5%" font-size="9.2" fill="#ffffff" font-weight="500" font-family="Inter">
+                    94% ●●●●○ 3.7k • 011011 • INSIGHTS • 78% ●●●○○ 9.1k • 101101 • CHARTS • 94% ●●●●○ 3.7k • 011011 • INSIGHTS • 87% ●●●●● 12.5k • DATA • VIZ
+                </text>
+            </svg>
+        </div>
+        
+        <div class="hero-content">
+            <h1>
+                Data<br>
+                <span class="vis-highlight">VIS</span> Designer
+            </h1>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2>ABOUT ME</h2>
+            <div class="about-main">
+                <div class="about-sidebar">
+                    <div class="about-number">2/5</div>
+                    <div class="about-label">FOR ME<br><br>DSGN/2</div>
+                </div>
+                <div class="about-quote">
+                    DESIGN<br>
+                    <span class="quote-gray">IS NOT JUST<br>
+                    DECORATION, BUT</span><br>
+                    A TOOL FOR<br>
+                    INFLUENCE
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Detail Section -->
+    <section class="about-detail">
+        <div class="about-detail-content">
+            <div class="about-text">
+                <p>I'm a data visualization designer passionate about transforming complex datasets into compelling visual narratives. With over 5 years of experience in the field, I specialize in creating interactive dashboards, infographics, and data-driven storytelling that makes information accessible and actionable.</p>
+                
+                <p>My approach combines analytical thinking with creative design principles, ensuring that every visualization not only looks beautiful but serves a clear purpose in communicating insights and driving decision-making.</p>
+                
+                <p>Based in Johannesburg, South Africa, I work with clients globally, helping organizations across industries unlock the power of their data through thoughtful design and strategic visualization.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Happy Clients</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <h2>Tech Stack</h2>
+        <div class="skills-content">
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Data Analysis</h3>
+                    <ul class="skill-list">
+                        <li>Python & R</li>
+                        <li>SQL & NoSQL</li>
+                        <li>Statistical Analysis</li>
+                        <li>Machine Learning</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Visualization Tools</h3>
+                    <ul class="skill-list">
+                        <li>D3.js & Observable</li>
+                        <li>Tableau & Power BI</li>
+                        <li>Adobe Creative Suite</li>
+                        <li>Figma & Sketch</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Development</h3>
+                    <ul class="skill-list">
+                        <li>React & Vue.js</li>
+                        <li>JavaScript & TypeScript</li>
+                        <li>HTML & CSS</li>
+                        <li>SVG & Canvas</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Design</h3>
+                    <ul class="skill-list">
+                        <li>Information Design</li>
+                        <li>UX/UI Design</li>
+                        <li>Color Theory</li>
+                        <li>Typography</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="work">
+        <div class="work-content">
+            <h2>RECENT WORKS</h2>
+            
+            <!-- Featured Project -->
+            <div class="featured-project">
+                <div class="featured-label">FEATURED PROJECT</div>
+                <div class="featured-grid">
+                    <div class="project-info">
+                        <h3 class="project-title">Global Climate Data Dashboard</h3>
+                        <p class="project-description">
+                            An interactive exploration of climate change patterns, featuring real-time data from weather stations worldwide. This dashboard combines satellite imagery, temperature records, and predictive modeling to create a comprehensive view of our changing climate.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">D3.js</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Climate Data</span>
+                            <span class="tag">Interactive</span>
+                        </div>
+                        <div class="project-buttons">
+                            <a href="#" class="btn">View Live</a>
+                            <a href="#" class="btn">Source Code</a>
+                        </div>
+                    </div>
+                    <div class="project-visual"></div>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image office"></div>
+                    <div class="project-card-content">
+                        <div class="project-category">Business Intelligence</div>
+                        <h4>E-commerce Analytics Platform</h4>
+                        <p>Real-time sales performance tracking and customer behavior analysis for online retailers.</p>
+                        <div class="project-tags">
+                            <span class="tag">Tableau</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">Business Intelligence</span>
+                            <span class="tag">KPIs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image book"></div>
+                    <div class="project-card-content">
+                        <div class="project-category">Data Storytelling</div>
+                        <h4>Financial Market Trends</h4>
+                        <p>Visual narrative exploring market volatility and investment patterns during economic uncertainty.</p>
+                        <div class="project-tags">
+                            <span class="tag">Financial Data</span>
+                            <span class="tag">R</span>
+                            <span class="tag">Statistical Analysis</span>
+                            <span class="tag">Infographics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image abstract"></div>
+                    <div class="project-card-content">
+                        <div class="project-category">Healthcare Analytics</div>
+                        <h4>Healthcare Data Insights</h4>
+                        <p>Patient outcome tracking and hospital efficiency metrics visualization system.</p>
+                        <div class="project-tags">
+                            <span class="tag">Healthcare</span>
+                            <span class="tag">Power BI</span>
+                            <span class="tag">Predictive Analytics</span>
+                            <span class="tag">Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2 class="contact-title">CONTACT<br><span class="me">ME</span></h2>
+            
+            <div class="contact-details">
+                <span class="phone">+27 11 123 4567</span>
+                <span class="email">thebe.sithole.data@gmail.com</span>
+            </div>
+
+            <div class="social-links">
+                <a href="#">INSTAGRAM ↗</a>
+                <a href="#">LINKEDIN ↗</a>
+                <a href="#">BEHANCE ↗</a>
+            </div>
+
+            <div class="address">
+                123 Data Street, BEHANCE ↗<br>
+                Johannesburg<br>
+                2000
+            </div>
+
+            <div class="footer-name"></div>
+
+            <div class="footer-info">
+                <div>JOHANNESBURG, SOUTH AFRICA: (GMT+2) <span id="current-time">22:31</span></div>
+                <div class="footer-links">
+                    <a href="#">[ DRIBBBLE ]</a>
+                    <a href="#">[ BEHANCE ]</a>
+                    <a href="#">[ LINKEDIN ]</a>
+                </div>
+                <div>
+                    <div>© All Rights Reserved.</div>
+                    <div>DEVELOPMENT - TS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toTimeString().slice(0, 5);
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
